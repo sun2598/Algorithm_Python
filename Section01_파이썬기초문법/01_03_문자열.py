@@ -18,6 +18,7 @@ print(msg)
 # 0123456789
 print(msg[:2]) # It -> 0,1 인덱스
 print(msg[3:5]) # is -> 3,4 인덱스
+print(msg[ : :-1]) # emiT si tI -> 역순으로 만들기!⭐️
 
 # 문자열 접근 방법 1
 print(len(msg)) # 10 -> len()으로 길이 구하기
