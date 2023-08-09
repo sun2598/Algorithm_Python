@@ -31,9 +31,14 @@ list2 = list(map(int, input().split()))
 # list.sort() # sort() 사용시 8log8의 시간복잡도
 
 # 강의방법 -> 좀 더 빠름!
+# <two pointer algorithm>
+#         p1
+# list1 : 1  3  5           // list1[p1] < list2[p2] 인지 비교
+# list2 : 2  3  5  7  9     //  -> 맞으면 list1[p1]을 list에 더해주고, p1 += 1
+#         p2
 p1 = p2 = 0
 list = []
-while p1 < n and p2 < m:
+while p1 < n and p2 < m: # 둘 중 하나라도 끝까지 가면 while문 중단
     if list1[p1] <= list2[p2]:
         list.append(list1[p1])
         p1 += 1
@@ -41,9 +46,9 @@ while p1 < n and p2 < m:
         list.append(list2[p2])
         p2 += 1
 # 남은 것들 처리
-if p1 < n:
+if p1 < n: # p2가 끝나서 p1이 남아있는 경우
     list = list + list1[p1:]
-if p2 < m:
+if p2 < m: # p1이 끝나서 p2가 남아있는 경우
     list = list + list2[p2:]
 
 for x in list:
