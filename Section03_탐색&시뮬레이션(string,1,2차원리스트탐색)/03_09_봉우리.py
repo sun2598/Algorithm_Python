@@ -37,4 +37,9 @@
 
 n = int(input())
 list1 = [list(map(int, input().split())) for _ in range(n)]
+list1.insert(0, [0]*n)
+list1.append([0]*n)
+for x in list1:
+    x.insert(0, 0)
+    x.append(0)
 
