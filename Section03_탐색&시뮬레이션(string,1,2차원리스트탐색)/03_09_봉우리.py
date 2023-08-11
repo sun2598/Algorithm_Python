@@ -36,10 +36,24 @@
 '''
 
 n = int(input())
-list1 = [list(map(int, input().split())) for _ in range(n)]
-list1.insert(0, [0]*n)
-list1.append([0]*n)
-for x in list1:
-    x.insert(0, 0)
-    x.append(0)
+a = [list(map(int, input().split())) for _ in range(n)]
 
+# 상하좌우 0 달아주기
+a.insert(0, [0]*n) # 상
+a.append([0]*n) # 하
+for x in a:
+    x.insert(0, 0) # 좌
+    x.append(0) # 우
+
+# 상하좌우 탐색 ⭐️
+dx = [-1, 0, 1, 0] # 행
+dy = [0, 1, 0, -1] # 열
+#     상  우  하  좌
+cnt = 0
+for i in range(1, n+1):
+    for j in range(1, n+1):
+        # k가 0,1,2,3을 돌 동안 모든 조건이 참이어야 함 ⭐️
+        if all(a[i][j] > a[i+dx[k]][j+dy[k]] for k in range(4)):
+            cnt += 1
+
+print(cnt)
