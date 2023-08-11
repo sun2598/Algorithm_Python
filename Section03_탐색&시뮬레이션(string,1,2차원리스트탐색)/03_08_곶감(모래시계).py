@@ -23,7 +23,7 @@ M개의 회전명령을 실행하고 난 후 아래와 같이 마당의 모래�
 [19 13 30 13 19] 
 
 ▣ 입력설명
-첫 줄에 자연수 N(3<=N<=20) 이 주어며, N은 홀수입니다.
+첫 줄에 자연수 N(3<=N<=20) 이 주어지며, N은 홀수입니다.
 두 번째 줄부터 N줄에 걸쳐 각 줄에 N개의 자연수가 주어진다.
 이 자연수는 각 격자안에 있는 감의 개수이며, 각 격자안의 감의 개수는 100을 넘지 않는다. 
 그 다음 줄에 회전명령의 개수인 M(1<=M<=10)이 주어지고, 그 다음 줄부터 M개의 회전명령 정보가 M줄에 걸쳐 주어집니다.
@@ -50,13 +50,30 @@ M개의 회전명령을 실행하고 난 후 아래와 같이 마당의 모래�
 n = int(input())
 list1 = [list(map(int, input().split())) for _ in range(n)]
 m = int(input())
-list2 = [list(map(int, input().split())) for _ in range(m)]
-cnt = 0
-lt = 0
-rt = n-1
 
 # 1. 회전 처리
-
-
+for i in range(m):
+    a, b, c = map(int, input().split())
+    if b == 0: # 왼쪽
+        for _ in range(c):
+            list1[a-1].append(list1[a-1].pop(0)) # 맨앞을 뽑아서 맨뒤에 붙임 -> 한칸씩 왼쪽으로 이동
+            print(list1)
+    else: # 오른쪽
+        for _ in range(c):
+            list1[a-1].insert(0, list1[a-1].pop()) # 맨뒤를 뽑아서 맨앞에 붙임 -> 한칸씩 오른쪽으로 이동
 
 # 2. 모래시계모양 카운트
+cnt = 0
+lt = 0
+rt = n - 1
+for i in range(n):
+    for j in range(lt, rt+1): # rt까지 포함해야되니까 +1 해주기
+        cnt += list1[i][j]
+    if i < n//2: # 둘째줄까지. (셋째줄 lt,rt 세팅)
+        lt += 1
+        rt -= 1
+    else: # 셋째줄부터.
+        lt -= 1
+        rt += 1
+
+print(cnt)
