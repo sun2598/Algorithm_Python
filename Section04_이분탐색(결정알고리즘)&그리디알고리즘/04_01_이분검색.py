@@ -18,3 +18,28 @@ N개의 수를 오름차순으로 정렬한 다음 N개의 수 중 한 개의 �
 ▣ 출력예제 1 
 3
 '''
+
+n, m = map(int, input().split())
+a = list(map(int, input().split()))
+a.sort()
+
+#     lt       mid         rt
+#     0  1  2  3  4  5  6  7    => mid > m 이므로 rt = mid - 1 해야함
+# a | 12 23 32 57 65 81 87 99
+
+#    lt mid rt
+#     0  1  2  3  4  5  6  7    => mid < m 이므로 lt = mid + 1 해야함
+# a | 12 23 32 57 65 81 87 99
+
+lt = 0
+rt = n-1
+
+while lt <= rt:
+    mid = (lt + rt) // 2
+    if a[mid] == m:
+        print(mid + 1)
+        break
+    elif a[mid] > m:
+        rt = mid - 1
+    else: # a[mid] < m
+        lt = mid + 1
