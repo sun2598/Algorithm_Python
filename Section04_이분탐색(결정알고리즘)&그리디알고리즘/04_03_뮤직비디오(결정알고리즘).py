@@ -8,6 +8,7 @@ DVD에는 총 N개의 곡이 들어가는데, DVD에 녹화할 때에는 라이�
 지니레코드 입장에서는 이 DVD가 팔릴 것인지 확신할 수 없기 때문에 이 사업에 낭비되는 DVD를 가급적 줄이려고 한다. 
 고민 끝에 지니레코드는 M개의 DVD에 모든 동영상을 녹화하기로 하였다. 이때 DVD의 크기(녹화 가능한 길이)를 최소로 하려고 한다. 
 그리고 M개의 DVD는 모두 같은 크기여야 제조원가가 적게 들기 때문에 꼭 같은 크기로 해야 한다.
+M개보다 적게 만드는 것도 M개를 만드는 것에 포함된다.
 
 ▣ 입력설명
 첫째 줄에 자연수 N(1≤N≤1,000), M(1≤M≤N)이 주어진다. 다음 줄에는 조영필이 라이브에서 부른 순서대로 부른 곡의 길이가 분 단위로(자연수) 주어진다. 
@@ -27,21 +28,36 @@ DVD에는 총 N개의 곡이 들어가는데, DVD에 녹화할 때에는 라이�
 17분 용량보다 작은 용량으로는 3개의 DVD에 모든 영상을 녹화할 수 없다.
 '''
 
-def Count(capacity):
-
+def Count(capacity): # 주어진 용량으로 몇 개의 DVD에 녹화할 수 있는지 구하기
+    cnt = 1 # 무조건 한장은 필요할테니까
+    sum = 0
+    for x in a:
+        if sum + x <= capacity:
+            sum += x
+        else: # sum + x > capacity
+            cnt += 1
+            sum = x # 새로운 DVD에 곡 넣기
+    return cnt
 
 n, m = map(int, input().split())
 a = list(map(int, input().split()))
+maxx = max(a) # 가장 긴 노래
 
-answer = 0 # 가능한 최소 용량 크기
-largest = sum(a) # 모든 곡들을 합한 용량
-
+# <이분검색>
 # lt          mid          rt
-# 1           23           45
+# 1           23           45   -> 23분으로 3개에 녹화할 수 있음(Count(mid) <= m) -> rt = mid - 1
 
 lt = 1
-rt = largest
+rt = sum(a) # 모든 곡들을 합한 용량
+answer = 0 # 가능한 최소 용량 크기
 
 while lt <= rt:
     mid = (lt+rt) // 2
-    if Count(mid) 
+    if mid >= maxx and Count(mid) <= m: 
+    # DVD의 용량은 가장 긴 노래 하나는 담을 수 있어야함. + M개보다 적게 만드는 것도 M개를 만드는 것에 포함되니까.
+        answer = mid
+        rt = mid - 1
+    else: # Count(mid) > m
+        lt = mid + 1
+
+print(answer)
