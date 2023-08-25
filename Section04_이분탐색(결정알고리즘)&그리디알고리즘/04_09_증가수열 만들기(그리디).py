@@ -36,7 +36,13 @@ n = int(input())
 a = list(map(int, input().split()))
 
 #     lt          rt
-# a | 2  4  5  1  3
+# a | 2  4  5  1  3     -> tmp = [(2, 'L'), (3, 'R')]
+
+#        lt       rt
+# a | 2  4  5  1  3     -> tmp = [(3, 'R'), (4, 'L')]
+
+#        lt    rt
+# a | 2  4  5  1  3     -> tmp = [(4, 'L')]
 
 lt = 0
 rt = n-1
@@ -53,7 +59,8 @@ while lt <= rt:
     if len(tmp) == 0:
         break
     else:
-        answer = answer + tmp[0][1] # 왼쪽 또는 오른쪽에서 가져온 순서 기록
+        # tmp의 첫번째 요소가 더 작은거니까 걔 먼저 처리
+        answer = answer + tmp[0][1]
         recent = tmp[0][0] # 가장 최근에 사용한 수 갱신
         if tmp[0][1] == "L":
             lt += 1
