@@ -8,7 +8,7 @@
 7823이 가장 큰 숫자가 됩니다.
 
 ▣ 입력설명
-첫째 줄에 숫자(길이는 1000을 넘지 않습니다)와 제가해야할 자릿수의 개수가 주어집니다.
+첫째 줄에 숫자(길이는 1000을 넘지 않습니다)와 제거해야할 자릿수의 개수가 주어집니다.
 
 ▣ 출력설명
 가장 큰 수를 출력합니다.
@@ -28,17 +28,23 @@
 
 num, m = map(int, input().split())
 
-num = list(map(int, str(num)))
-stack = []
+num = list(map(int, str(num))) # 숫자를 자릿수별로 나눠서 리스트로 변환 -> [5, 2, 7, 6, 8, 2, 3]
+stack = [] # 제거할 숫자 담을 스택
 
 for x in num:
-    while stack and m>0 and stack[-1]<x:
-        stack.pop()
-        m -= 1
-    stack.append(x)
+    while stack and m>0 and x>stack[-1]: # 제거할 숫자가 남아있고, x가 스택의 마지막 요소보다 큰 경우
+        stack.pop() # x보다 작은 숫자를 스택에서 제거하여 가장 큰 수를 만들려는 목적
+        m -= 1 # 제거할 숫자 개수 감소
+    stack.append(x) # 제거할 숫자 스택에 추가
 
-if m != 0:
-    stack = stack[:-m]
+print(stack) # [9, 9, 7, 7, 6, 4, 1]
+print(m) # 2
+
+if m != 0: # 아직 제거할 자릿수가 남아 있는 경우
+    stack = stack[:-m] # stack의 뒷부분에서부터 m개의 요소를 제거
+
 answer = ''.join(map(str, stack))
+# map(str, stack) -> [9, 9, 7, 7, 6]
+# ''.join : 주어진 문자열들을 구분자(여기선 빈 문자열 '')로 구분하여 결합하여 하나의 문자열로 만듦 -> 7823
 
 print(answer)
